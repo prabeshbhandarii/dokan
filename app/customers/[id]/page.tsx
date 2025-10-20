@@ -2,11 +2,12 @@ import { prisma } from '../../../lib/prisma'
 import Link from 'next/link'
 import { revalidatePath } from 'next/cache'
 
-type Props = { params: { id: string } }
+type Props = { params: Promise<{ id: string }> }
 
 export default async function Page({ params }: Props) {
-  const id = Number(params.id)
-  const customer = await prisma.customer.findUnique({ where: { id }, include: { transactions: { orderBy: { createdAt: 'asc' } } } })
+  const { id } = await params
+  const customerId = Number(id)
+  const customer = await prisma.customer.findUnique({ where: { id: customerId }, include: { transactions: { orderBy: { createdAt: 'asc' } } } })
   if (!customer) return <div>Not found</div>
 
   const total = customer.transactions.reduce((s, t) => s + (t.type === 'purchase' ? t.amount : -t.amount), 0)
@@ -41,8 +42,8 @@ export default async function Page({ params }: Props) {
       </div>
 
       <div className="grid grid-cols-2 gap-4">
-        <PurchaseForm customerId={id} />
-        <PaymentForm customerId={id} />
+        <PurchaseForm customerId={customerId} />
+        <PaymentForm customerId={customerId} />
       </div>
     </div>
   )

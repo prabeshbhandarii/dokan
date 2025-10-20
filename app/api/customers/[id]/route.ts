@@ -1,10 +1,11 @@
 import { NextResponse } from 'next/server'
 import { prisma } from '../../../../lib/prisma'
 
-export async function GET(req: Request, { params }: { params: { id: string } }) {
-  const id = Number(params.id)
+export async function GET(req: Request, { params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params
+  const customerId = Number(id)
   const customer = await prisma.customer.findUnique({
-    where: { id },
+    where: { id: customerId },
     include: { transactions: { orderBy: { createdAt: 'asc' } } }
   })
   if (!customer) return NextResponse.json({ error: 'not found' }, { status: 404 })
