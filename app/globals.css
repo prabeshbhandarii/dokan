@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body, #__next {
+  height: 100%;
+}
+
+body {
+  @apply bg-white text-gray-900 font-sans;
+}
+
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 2rem;
+}
