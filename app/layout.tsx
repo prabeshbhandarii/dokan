@@ -31,10 +31,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         <div className="container">
-          <header className="mb-6 flex justify-between items-center">
+          <header className="mb-6 flex justify-between items-center gap-4">
             <div>
-              <h1 className="text-2xl font-semibold">Dokan</h1>
-              <p className="text-sm text-gray-600">Minimal credit account manager</p>
+              <h1 className="text-2xl sm:text-3xl font-bold">Dokan</h1>
+              <p className="text-sm sm:text-base text-gray-600 font-medium">Minimal credit account manager</p>
             </div>
             <LogoutButton />
           </header>
