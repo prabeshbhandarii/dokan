@@ -1,7 +1,10 @@
+export const dynamic = "force-dynamic";
+
 import Link from 'next/link'
 import { prisma } from '../lib/prisma'
 import { revalidatePath } from 'next/cache'
 import { SubmitButton } from '../components/SubmitButton'
+
 
 async function getCustomers() {
   return prisma.customer.findMany({ include: { transactions: true } })
